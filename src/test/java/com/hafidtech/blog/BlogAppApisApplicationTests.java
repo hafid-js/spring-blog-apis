@@ -1,4 +1,4 @@
-package com.hafidtech.blog.blogappapis;
+package com.hafidtech.blog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

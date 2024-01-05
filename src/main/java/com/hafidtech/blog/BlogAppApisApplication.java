@@ -1,4 +1,4 @@
-package com.hafidtech.blog.blogappapis;
+package com.hafidtech.blog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
