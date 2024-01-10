@@ -2,6 +2,7 @@ package com.hafidtech.blog.controllers;
 
 import com.hafidtech.blog.entities.User;
 import com.hafidtech.blog.payloads.ApiResponse;
+import com.hafidtech.blog.payloads.PostDto;
 import com.hafidtech.blog.payloads.UserDto;
 import com.hafidtech.blog.services.UserService;
 import jakarta.validation.Valid;
@@ -47,6 +48,13 @@ public class UserController {
     public ResponseEntity<UserDto> getSingleUser(@PathVariable Integer userId) {
         return ResponseEntity.ok(this.userService.getUserById(userId));
     }
+
+
+
+
+
+
+
 
 
 
