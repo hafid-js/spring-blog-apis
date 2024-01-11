@@ -2,6 +2,7 @@ package com.hafidtech.blog.services;
 
 import com.hafidtech.blog.entities.Post;
 import com.hafidtech.blog.payloads.PostDto;
+import com.hafidtech.blog.payloads.PostResponse;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface PostService {
 
     void deletePost(Integer postId);
 
-    List<PostDto> getAllPost();
+    PostResponse getAllPost(Integer pageNumber, Integer pageSize);
 
     PostDto getPostById(Integer postId);
 
