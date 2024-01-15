@@ -1,14 +1,18 @@
 package com.hafidtech.blog.services.impl;
 
+import com.hafidtech.blog.config.AppConstants;
+import com.hafidtech.blog.entities.Role;
 import com.hafidtech.blog.entities.User;
 import com.hafidtech.blog.exceptions.ResourceNotFoundException;
 import com.hafidtech.blog.payloads.UserDto;
+import com.hafidtech.blog.repositories.RoleRepo;
 import com.hafidtech.blog.repositories.UserRepo;
 import com.hafidtech.blog.services.UserService;
 import org.apache.catalina.UserDatabase;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +26,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleRepo roleRepo;
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -86,5 +96,19 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
+    @Override
+    public UserDto registerNewUser(UserDto userDto) {
+        User user = this.modelMapper.map(userDto, User.class);
 
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+
+        Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
+
+        user.getRoles().add(role);
+
+        User newUser = this.userRepo.save(user);
+
+        return this.modelMapper.map(newUser, UserDto.class);
+
+    }
 }

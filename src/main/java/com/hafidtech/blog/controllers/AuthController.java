@@ -1,9 +1,12 @@
 package com.hafidtech.blog.controllers;
 
+import com.hafidtech.blog.exceptions.ApiException;
 import com.hafidtech.blog.payloads.JwtAuthRequest;
 import com.hafidtech.blog.payloads.JwtAuthResponse;
+import com.hafidtech.blog.payloads.UserDto;
 import com.hafidtech.blog.security.JwtTokenHelper;
 import com.hafidtech.blog.services.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,9 +61,20 @@ public class AuthController {
             this.authenticationManager.authenticate(authenticationToken);
         } catch (BadCredentialsException e) {
             System.out.println("Invalid Details !");
-            throw new Exception("Invalid username or password");
+            throw new ApiException("Invalid username or password");
 
         }
 
+    }
+
+    @PostMapping("/register")
+    @SecurityRequirement(name = "bearerAuth")
+    public ResponseEntity<UserDto> registerUser(
+            @RequestBody UserDto userDto
+    ) {
+
+        UserDto registeredUser = this.userService.registerNewUser(userDto);
+
+        return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
     }
 }

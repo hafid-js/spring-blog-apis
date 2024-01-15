@@ -7,6 +7,7 @@ import com.hafidtech.blog.payloads.PostDto;
 import com.hafidtech.blog.payloads.PostResponse;
 import com.hafidtech.blog.services.FIleService;
 import com.hafidtech.blog.services.PostService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -40,6 +41,7 @@ public class PostController {
 
 
     @PostMapping("/user/{userId}/category/{categoryId}/posts")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<PostDto> createPost(
             @RequestBody PostDto postDto,
             @PathVariable Integer userId,
@@ -85,6 +87,7 @@ public class PostController {
     }
 
     @DeleteMapping("/posts/{postId}")
+    @SecurityRequirement(name = "bearerAuth")
     public ApiResponse deletePost(@PathVariable Integer postId) {
         this.postService.deletePost(postId);
         return new ApiResponse("Post is successfully deleted !!", true);
@@ -92,6 +95,7 @@ public class PostController {
     }
 
     @PutMapping("/posts/{postId}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable Integer postId) {
         PostDto updatePost = this.postService.updatePost(postDto, postId);
         return new ResponseEntity<PostDto>(updatePost, HttpStatus.OK);
@@ -111,6 +115,7 @@ public class PostController {
     // post image upload
 
     @PostMapping("/post/image/upload/{postId}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<PostDto> uploadPostImage(
             @RequestParam("image")MultipartFile image,
             @PathVariable Integer postId

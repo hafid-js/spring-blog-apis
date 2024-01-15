@@ -3,6 +3,8 @@ package com.hafidtech.blog.controllers;
 import com.hafidtech.blog.payloads.ApiResponse;
 import com.hafidtech.blog.payloads.CategoryDto;
 import com.hafidtech.blog.services.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
     @PostMapping("/")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto) {
         CategoryDto createCategory = this.categoryService.createCategory(categoryDto);
         return new ResponseEntity<CategoryDto>(createCategory, HttpStatus.CREATED);
@@ -25,6 +28,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{catId}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto categoryDto, @PathVariable Integer catId) {
         CategoryDto updatedCategory = this.categoryService.updateCategory(categoryDto, catId);
         return new ResponseEntity<CategoryDto>(updatedCategory, HttpStatus.OK);
@@ -32,6 +36,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{catId}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Integer catId) {
         this.categoryService.deleteCategory(catId);
         return new ResponseEntity<ApiResponse>(new ApiResponse("category is deleted successfully !!", true), HttpStatus.OK);
