@@ -17,7 +17,7 @@ import java.util.Arrays;
 
 
 @Configuration
-@OpenAPIDefinition(info = @Info(title = "My API", version = "v1"))
+@OpenAPIDefinition(info = @Info(title = "Blogging Application : Backend", version = "v1", description = "This project is developed by HafidTech", termsOfService = "Term of Service"))
 @SecurityScheme(
         name = "bearerAuth",
         type = SecuritySchemeType.HTTP,
